@@ -1,12 +1,12 @@
 .App {
   text-align: center;
-  /* background: #661F6F;
+  background: #661F6F;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center; */
-  /* justify-content: center; */
-  /* color: white; */
+  justify-content: center;
+  color: white; 
 }
 
 p {
@@ -15,8 +15,8 @@ p {
 }
 
 button {
-  height: 50px;
-  width: 100px;
+  height: 20px;
+  width: 200px;
   font-size: px;
   background: rgb(206, 206, 223);
   border-radius: 25px;

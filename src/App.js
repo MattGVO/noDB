@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
+import Input from './Input';
+import SavedLibz from './SavedLibz';
 
 class App extends Component {
   constructor() {
@@ -12,13 +14,12 @@ class App extends Component {
       hiddenTitle: '',
       title: '',
       lib: '',
-      savedLibz:[],
-      edit: false,
+      savedLibz: [],
       pendingTitle: '',
     }
   }
 
-  
+
   componentDidMount() {
     let promise = axios.get("/api/libz");
     promise.then((res) => {
@@ -31,8 +32,6 @@ class App extends Component {
     });
   }
 
-
-  //This function pulls a random MadLib from the MadLib API and fills out all of the input boxes with blanks. The placeholders for all of the inputs are set to the value of the blanks. This also resets the title and the final MadLib values.
   getLib = () => {
     axios.get('http://madlibz.herokuapp.com/api/random').then((res) => {
 
@@ -46,7 +45,6 @@ class App extends Component {
     })
   }
 
-  //this function actively changes the values of the blanks as the user types into the input box.
   updateBlanks = (e, i) => {
     var newArray = [...this.state.blanks];
     newArray.splice(i, 1, e.target.value)
@@ -55,8 +53,6 @@ class App extends Component {
     })
   }
 
-
-//This function joins the blanks and the MadLib together to get the final hillarious lib!
   returnLib = () => {
     var libArray = [];
     var sentence = this.state.sentences;
@@ -73,10 +69,8 @@ class App extends Component {
     })
   }
 
-
-//This function saves the MadLib to the server and gets it back to be save in the state as savedLibz
   saveLib = () => {
-    axios.post(`/api/libz`,{title: this.state.title.join(""), lib: this.state.lib})
+    axios.post(`/api/libz`, { title: this.state.title.join(""), lib: this.state.lib })
       .then((res) => {
         let newArray = res.data
         console.log(newArray);
@@ -85,24 +79,14 @@ class App extends Component {
           title: '',
           lib: ''
         })
-        
-    });
+
+      });
 
   }
 
-  changeEdit = () =>{
-    this.state.edit === false?
-    this.setState({
-      edit: true,
-      
-    }) :
-    this.setState({
-      edit:false
-    })
-  }
 
 
-  pendingTitleUpdate = (e) =>{
+  pendingTitleUpdate = (e) => {
     var input = e.target.value
     console.log(this.state.pendingTitle);
     this.setState({
@@ -110,14 +94,20 @@ class App extends Component {
     })
   }
 
-  updateTitle = (e,id) => {
-    axios.put(`/api/libz/${id}`).then((res)=>)
-    
-    }
+  updateTitle = (id) => {
+    axios.put(`/api/libz/${id}`, { title: this.state.pendingTitle }).then((res) => {
+      let newArr = [...this.state.savedLibz]
+      newArr[id].splice = this.state.pendingTitle
+      this.setState({
+        savedLibz: newArr
+      })
+    })
+
   }
 
+
   deleteLib = (id) => {
-    axios.delete(`/api/libz/${id}`).then((res) =>{
+    axios.delete(`/api/libz/${id}`).then((res) => {
       this.setState({
         savedLibz: res.data
       })
@@ -134,85 +124,71 @@ class App extends Component {
 
         <h1>Matt Libz</h1>
 
-        {/* This button gets the input boxes for the MadLib's blanks */}
-        {this.state.blanks == '' ? 
-        <button onClick={this.getLib}>Get A Lib</button> 
-        : <p></p>
+        {this.state.blanks == '' ?
+          <button onClick={this.getLib}>Get A Lib</button>
+          : <button onClick={this.getLib}>Get A New Lib</button>
         }
-        
 
-        {/* This maps all of the input boxes of the MadLib's blanks */}
-        <form>{this.state.blanks.map((val, i) => {
-          return <input type="text" 
-          key={i} 
-          onChange={(e) => { this.updateBlanks(e, i) }} 
-          placeholder={val}>
-          </input>
-        })}</form>
 
-        {/* <form>{this.state.blanks.map((val, i) => {
+        <br></br>
+
+        {this.state.blanks.map((val, i) => {
           return <div>
-            <input type="text" key={i}  placeholder={val}></input>
-            </div>
-        })}</form> */}
+            <Input
+              key={i}
+              placeholder={val}
+              onChange={(e) => { this.updateBlanks(e, i) }}
+              updateBlanks={this.updateBlanks}
+            />
+          </div>
+        })}
 
+        <br></br>
 
-
-        {/* This button returns the blanks and the madlib together */}
         {this.state.blanks == '' ? null
-         : <button 
-         onClick={this.returnLib}>
-         Let's Get Libby Wid It!
+          : <button
+            onClick={this.returnLib}>
+            Let's Get Libby Wid It!
          </button>
         }
-        
+
 
         <div>
 
           {/* MadLib Title */}
           <h2>{this.state.title !== '' ?
-           this.state.title :
+            this.state.title :
             null}
-            </h2>
+          </h2>
 
           {/* Madlib content */}
           <p>{this.state.lib}</p>
 
 
 
-          {this.state.lib !== '' ? 
-          <button 
-          onClick={()=> this.saveLib()}>
-          That was Hilarious!
+          {this.state.lib !== '' ?
+            <button
+              onClick={() => this.saveLib()}>
+              That was Hilarious!
           </button> :
-           null
+            null
           }
 
-        
+
         </div>
 
-        {this.state.savedLibz ==''? <p></p>: <h1>Saved</h1>}
+        {this.state.savedLibz == '' ? <p></p> : <h1>Saved</h1>}
 
         <div>
-          {this.state.savedLibz.map((val, i) => {
-            return <div> 
-              
-              <h2>{this.state.savedLibz[i].title}</h2>
 
-              {this.state.edit === true? 
-                null
-                :<button onClick={this.changeEdit}>Change Title</button> }
-
-              {this.state.edit === true? <form>
-                <input onChange={e=>this.pendingTitleUpdate(e)}></input>
-                <button >Submit</button> 
-                </form>
-              : null}
-              <p>{val.lib}</p>
-              <button onClick={e=> this.deleteLib(i)}>I'm Over It</button>
-              </div>
-          })}
+          <SavedLibz
+            savedLibz={this.state.savedLibz}
+            pendingTitleUpdate={this.pendingTitleUpdate}
+            upateTitle={this.updateTitle}
+            deleteLib={this.deleteLib}
+          />
         </div>
+
 
 
       </div>
