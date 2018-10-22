@@ -48,6 +48,7 @@ class App extends Component {
   updateBlanks = (e, i) => {
     var newArray = [...this.state.blanks];
     newArray.splice(i, 1, e.target.value)
+    console.log(i);
     this.setState({
       blanks: newArray
     })
@@ -120,7 +121,7 @@ class App extends Component {
       <div className="App">
 
 
-        <h1>Matt Libz</h1>
+        <h1>MATTLibz</h1>
 
         {this.state.blanks == '' ?
           <button onClick={this.getLib}>Get A Lib</button>
@@ -135,7 +136,6 @@ class App extends Component {
             <Input
               key={i}
               placeholder={val}
-              onChange={(e) => { this.updateBlanks(e, i) }}
               updateBlanks={this.updateBlanks}
             />
           </div>
