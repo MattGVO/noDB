@@ -10,10 +10,11 @@ export default class App extends Component {
         }
     }
 
-    changeEdit = () => {
+    changeEdit = (i) => {
         this.state.edit === false ?
           this.setState({
             edit: true,
+            index: i
           }) :
           this.setState({
             edit: false
@@ -28,7 +29,7 @@ export default class App extends Component {
 
                         <h2>{this.props.savedLibz[i].title}</h2>
 
-                        {this.state.edit === true ?
+                        {this.state.edit === true && this.state.index === i ?
                             <form>
                             <input onChange={e => this.props.pendingTitleUpdate(e)}
                             key={ i }
@@ -38,7 +39,7 @@ export default class App extends Component {
                             >Submit
                             </button>
                         </form>
-                            : <button onClick={this.changeEdit}>Change Title</button>}
+                            : <button onClick={() => this.changeEdit(i)}>Change Title</button>}
 
                         <p>{val.lib}</p>
                         <button onClick={e => this.props.deleteLib(i)}>I'm Over It</button>
