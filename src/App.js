@@ -28,7 +28,7 @@ class App extends Component {
       this.setState({
         savedLibz: newArray
       })
-      // console.log(res);
+      console.log(res);
     });
   }
 
@@ -96,10 +96,8 @@ class App extends Component {
 
   updateTitle = (id) => {
     axios.put(`/api/libz/${id}`, { title: this.state.pendingTitle }).then((res) => {
-      let newArr = [...this.state.savedLibz]
-      newArr[id].splice = this.state.pendingTitle
       this.setState({
-        savedLibz: newArr
+        savedLibz: res.data
       })
     })
 

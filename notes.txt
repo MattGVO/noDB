@@ -1,9 +1,0 @@
--put
-
--delete
-
--props
-
--fix input reset error
-
--edit blanks after save

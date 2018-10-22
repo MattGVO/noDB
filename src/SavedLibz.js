@@ -6,6 +6,7 @@ export default class App extends Component {
 
         this.state= {
             edit: false,
+            index: 0
         }
     }
 
@@ -13,7 +14,6 @@ export default class App extends Component {
         this.state.edit === false ?
           this.setState({
             edit: true,
-    
           }) :
           this.setState({
             edit: false
@@ -24,22 +24,22 @@ export default class App extends Component {
         return (
             <div>
                 {this.props.savedLibz.map((val, i) => {
-                    return <div key={i} >
+                    return <div>
 
                         <h2>{this.props.savedLibz[i].title}</h2>
 
                         {this.state.edit === true ?
-                            null
-                            : <button onClick={this.changeEdit}>Change Title</button>}
-
-                        {this.state.edit === true ? <form>
-                            <input onChange={e => this.props.pendingTitleUpdate(e)}></input>
+                            <form>
+                            <input onChange={e => this.props.pendingTitleUpdate(e)}
+                            key={ i }
+                            ></input>
                             <button
                                 onClick={() => this.props.upateTitle(i)}
                             >Submit
-                </button>
+                            </button>
                         </form>
-                            : null}
+                            : <button onClick={this.changeEdit}>Change Title</button>}
+
                         <p>{val.lib}</p>
                         <button onClick={e => this.props.deleteLib(i)}>I'm Over It</button>
                     </div>
