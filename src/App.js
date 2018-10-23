@@ -49,6 +49,7 @@ class App extends Component {
     var newArray = [...this.state.blanks];
     newArray.splice(i, 1, e.target.value)
     console.log(i);
+    
     this.setState({
       blanks: newArray
     })
@@ -134,7 +135,7 @@ class App extends Component {
         {this.state.blanks.map((val, i) => {
           return <div>
             <Input
-              key={i}
+              index={i}
               placeholder={val}
               updateBlanks={this.updateBlanks}
             />

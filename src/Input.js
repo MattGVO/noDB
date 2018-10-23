@@ -7,7 +7,7 @@ function Input(props){
                 <input 
                 type="text"
                 placeholder= {props.placeholder}
-                onChange= {e => props.updateBlanks(e, props.key)}
+                onChange= {e => props.updateBlanks(e, props.index)}
                 ></input>
             </form>
         );
