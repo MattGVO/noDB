@@ -3,6 +3,7 @@ import './App.css';
 import axios from "axios";
 import Input from './Input';
 import SavedLibz from './SavedLibz';
+import Button from './Button';
 
 class App extends Component {
   constructor() {
@@ -125,8 +126,14 @@ class App extends Component {
         <h1>MATTLibz</h1>
 
         {this.state.blanks == '' ?
-          <button onClick={this.getLib}>Get A Lib</button>
-          : <button onClick={this.getLib}>Get A New Lib</button>
+          <Button 
+          name ="Get A Lib"
+          onClickFunction ={this.getLib}
+          />
+          : <Button 
+          name ="Get A New Lib"
+          onClickFunction ={this.getLib}
+          />
         }
 
 
@@ -145,13 +152,13 @@ class App extends Component {
         <br></br>
 
         {this.state.blanks == '' ? null
-          : <button
-            onClick={this.returnLib}>
-            Let's Get Libby Wid It!
-         </button>
+          : <Button
+            name= "Let's Get Libby Wid It!"
+            onClickFunction={this.returnLib}
+         />
         }
 
-
+       
         <div>
 
           {/* MadLib Title */}
@@ -166,10 +173,10 @@ class App extends Component {
 
 
           {this.state.lib !== '' ?
-            <button
-              onClick={() => this.saveLib()}>
-              That was Hilarious!
-          </button> :
+            <Button
+            name= "That was Hilarious!"
+            onClickFunction={this.saveLib}
+         /> :
             null
           }
 

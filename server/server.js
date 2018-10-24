@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 
-const app = express()
+const app = express();
 
 app.use(bodyParser.json())
 
@@ -29,7 +29,7 @@ app.put('/api/libz/:id', (req, res) => {
     console.log('body', title);
     console.log(libz[id].title);
     libz[id].title = title
-    res.status(200).send(libz)
+    res.status(200).send(libz);
 })
 
 app.delete('/api/libz/:id', (req, res) => {
