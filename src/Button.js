@@ -5,7 +5,7 @@ function Button(props){
     return(
               <div>
                   <button
-                  onClick={props.onClickFunction}
+                  onClick={() => props.onClickFunction(props.i)}
                   >{props.name}</button>
               </div>
           );

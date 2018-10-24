@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button';
 
 
 export default class App extends Component {
@@ -35,10 +36,11 @@ export default class App extends Component {
                             <input onChange={e => this.props.pendingTitleUpdate(e)}
                             key={ i }
                             ></input>
-                            <button
-                                onClick={() => this.props.upateTitle(i)}
-                            >Submit
-                            </button>
+                            <Button
+                                name = "Submit"
+                                onClickFunction={this.props.upateTitle}
+                                i = {i}
+                            />
                         </form>
                             : <button onClick={() => this.changeEdit(i)}>Change Title</button>}
 
