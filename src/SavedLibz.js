@@ -45,7 +45,10 @@ export default class App extends Component {
                             : <button onClick={() => this.changeEdit(i)}>Change Title</button>}
 
                         <p>{val.lib}</p>
-                        <button onClick={e => this.props.deleteLib(i)}>I'm Over It</button>
+                        <Button 
+                        name ="I'm Over It"
+                        onClickFunction={this.props.deleteLib}
+                        />
                     </div>
                 })}
             </div>
